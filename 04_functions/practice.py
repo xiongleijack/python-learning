@@ -1,13 +1,18 @@
-"""练习：实现 clamp(value, low, high)，把 value 限制在 [low, high]"""
+def add(a,b):
+    return a + b
+
+def add_new(a: int, b: int) -> int:
+    return a + b
+
+def add_many(*args):
+    return sum(args)
+
+def add_many_kwargs(**kwargs):
+    return sum(kwargs.values())
+
+print(add(1, 2))
+print(add_many(1, 2, 3, 4, 5))
+print(add_many_kwargs(a=1, b=2, c=3))
 
 
-def clamp(value: int, low: int, high: int) -> int:
-    # TODO
-    return value
-
-
-if __name__ == "__main__":
-    assert clamp(5, 1, 10) == 5
-    assert clamp(-1, 0, 10) == 0
-    assert clamp(99, 0, 10) == 10
-    print("practice 04 通过 ✓")
+input_str = input("请输入一个字符串: ")
