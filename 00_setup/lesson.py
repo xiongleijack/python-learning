@@ -8,11 +8,15 @@ Java 对比：
 
 # 单行注释用 #，没有 /* */（多行用三引号字符串，见下文）
 
-def main() -> None:
-    print("Hello, Python!")
-    print("Java 程序员提示：print 自带换行，类似 System.out.println")
+# def main() -> None:
+#     print("Hello, Python!")
+#     print("Java 程序员提示：print 自带换行，类似 System.out.println")
 
 
-# Python 的「程序入口」，类似 Java 的 public static void main(String[] args)
-if __name__ == "__main__":
-    main()
+# # Python 的「程序入口」，类似 Java 的 public static void main(String[] args)
+# if __name__ == "__main__":
+#     main()
+
+
+print("Hello, Python!")
+print("Java 程序员提示：print 自带换行，类似 System.out.println")

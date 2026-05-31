@@ -1,4 +1,6 @@
-# 08 章 Mini API 需要；前几章只用标准库
+# 08 章 Mini API；09 章 Claude SDK；前几章只用标准库
 fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
 pydantic>=2.9.0
+anthropic>=0.40.0
+python-dotenv>=1.0.0

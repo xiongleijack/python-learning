@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "lessonFolder",
+      "type": "pickString",
+      "description": "选择章节目录",
+      "options": [
+        "00_setup",
+        "01_basics",
+        "02_control_flow",
+        "03_collections",
+        "04_functions",
+        "05_oop",
+        "06_exceptions_io",
+        "07_typing",
+        "08_mini_api",
+        "09_claude_sdk"
+      ],
+      "default": "02_control_flow"
+    }
+  ],
+  "tasks": [
+    {
+      "label": "Run Lesson: 选章节",
+      "type": "shell",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/run-lesson.ps1",
+        "-Lesson",
+        "${input:lessonFolder}"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Python: 运行当前文件",
+      "type": "shell",
+      "command": "${command:python.interpreterPath}",
+      "args": ["${file}"],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}
