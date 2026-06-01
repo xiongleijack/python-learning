@@ -3,4 +3,4 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .env
-06_exceptions_io/sample.json
+07_exceptions_io/sample.json

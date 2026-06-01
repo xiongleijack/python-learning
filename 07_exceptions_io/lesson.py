@@ -1,5 +1,5 @@
 """
-06 - 异常与文件
+07 - 异常与文件
 
 Java try-catch-finally     try-except-finally
 IOException                  FileNotFoundError 等

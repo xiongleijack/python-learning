@@ -1,5 +1,5 @@
 """
-07 - 类型标注（Java 程序员会觉得很亲切）
+08 - 类型标注（Java 程序员会觉得很亲切）
 
 Java List<String>     list[str]
 Java Map<String,Int>  dict[str, int]

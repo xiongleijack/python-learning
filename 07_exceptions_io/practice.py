@@ -12,4 +12,4 @@ def load_json(path: Path) -> dict:
 if __name__ == "__main__":
     missing = Path(__file__).with_name("not-exist.json")
     assert load_json(missing) == {}
-    print("practice 06 通过 ✓（文件不存在分支）")
+    print("practice 07 通过 ✓（文件不存在分支）")

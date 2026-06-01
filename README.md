@@ -17,17 +17,17 @@ python --version
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt   # 第 8、9 章需要
+pip install -r requirements.txt   # 第 9、10 章需要
 ```
 
 ## 怎么用
 
-1. 按 `00` → `09` 顺序学习。
+1. 按 `00` → `10` 顺序学习。
 2. 每章先跑 `lesson.py`，再完成 `practice.py`。
 3. 一键跑某一章：
 
 ```powershell
-.\run-lesson.ps1 -Lesson 01_basics
+.\run-lesson.ps1 -Lesson 06_async
 ```
 
 4. 做完后在下方「进度」打勾。
@@ -43,7 +43,7 @@ pip install -r requirements.txt   # 第 8、9 章需要
 4. **跑整章**：`Ctrl+Shift+P` → `Tasks: Run Task` → **Run Lesson: 选章节**。
 5. **快捷键**：`Ctrl+Shift+B` 默认执行 **Python: 运行当前文件**（需先打开要运行的 `.py`）。
 
-第 9 章读 `.env` 时，若路径不对，用 `F5` 选 **Python: 当前文件（仓库根目录）**。
+第 10 章读 `.env` 时，若路径不对，用 `F5` 选 **Python: 当前文件（仓库根目录）**。
 
 ## 进度
 
@@ -53,10 +53,11 @@ pip install -r requirements.txt   # 第 8、9 章需要
 - [ ] 03 集合与推导式
 - [ ] 04 函数与模块
 - [ ] 05 面向对象
-- [ ] 06 异常与文件
-- [ ] 07 类型标注
-- [ ] 08 实战：Mini API
-- [ ] 09 Claude SDK API
+- [ ] 06 异步编程
+- [ ] 07 异常与文件
+- [ ] 08 类型标注
+- [ ] 09 实战：Mini API
+- [ ] 10 Claude SDK API
 
 ## 目录
 
@@ -64,9 +65,15 @@ pip install -r requirements.txt   # 第 8、9 章需要
 python-learning/
 ├── 00_setup/
 ├── 01_basics/
-├── ...
-├── 08_mini_api/
-├── 09_claude_sdk/
+├── 02_control_flow/
+├── 03_collections/
+├── 04_functions/
+├── 05_oop/
+├── 06_async/              # 新增：asyncio
+├── 07_exceptions_io/
+├── 08_typing/
+├── 09_mini_api/
+├── 10_claude_sdk/
 ├── run-lesson.ps1
 └── requirements.txt
 ```
@@ -80,20 +87,32 @@ python-learning/
 | `Map<K,V>` | `dict` |
 | `record` / Lombok | `@dataclass` |
 | `Maven/Gradle` | `pip` + `requirements.txt` |
-| `Spring Boot` | FastAPI（第 8 章） |
-| HTTP 客户端调 LLM | Anthropic SDK（第 9 章） |
+| `CompletableFuture` / `@Async` | `async def` + `await`（第 6 章） |
+| `Spring Boot` | FastAPI（第 9 章） |
+| HTTP 客户端调 LLM | Anthropic SDK（第 10 章） |
 | 花括号 `{}` | **缩进** |
 
-## 学习节奏（建议 4 周）
+## 学习节奏（建议 4～5 周）
 
 | 周 | 章节 | 目标 |
 |----|------|------|
 | 1 | 00～03 | 语法、集合 |
 | 2 | 04～05 | 函数、OOP |
-| 3 | 06～07 | IO、类型 |
-| 4 | 08～09 | Mini API + Claude SDK |
+| 3 | 06～08 | 异步、IO、类型 |
+| 4 | 09 | 写一个小 API |
+| 5 | 10 | Claude SDK |
 
-## 第 9 章：Claude SDK 速查
+## 第 6 章：异步速查
+
+| 概念 | 说明 |
+|------|------|
+| 协程 | `async def` 定义，调用需 `await` |
+| 入口 | `asyncio.run(main())` |
+| 并发等待 | `await asyncio.gather(...)` |
+| 模拟 IO | `await asyncio.sleep(sec)` |
+| 与 FastAPI | 路由里 `async def` 同理（第 9 章） |
+
+## 第 10 章：Claude SDK 速查
 
 | 概念 | 说明 |
 |------|------|
@@ -119,6 +138,7 @@ git push -u origin main
 ## 资源
 
 - [Python 官方教程](https://docs.python.org/3/tutorial/)
+- [asyncio 文档](https://docs.python.org/3/library/asyncio.html)
 - [FastAPI 教程](https://fastapi.tiangolo.com/zh/)
 - [Anthropic Python SDK](https://platform.claude.com/docs/en/api/sdks/python)
 - [Messages API 指南](https://platform.claude.com/docs/en/build-with-claude/working-with-messages)

@@ -1,7 +1,7 @@
 """
-09 - Claude API（Anthropic Python SDK）
+10 - Claude API（Anthropic Python SDK）
 
-前置：完成 04（函数）、07（类型标注）会更顺手。
+前置：完成 04（函数）、08（类型标注）会更顺手。
 
 环境：
   pip install anthropic python-dotenv
@@ -9,7 +9,7 @@
     ANTHROPIC_API_KEY=sk-ant-...
 
 运行：
-  python 09_claude_sdk/lesson.py
+  python 10_claude_sdk/lesson.py
 
 文档：
   https://platform.claude.com/docs/en/api/sdks/python

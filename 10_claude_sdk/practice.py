@@ -6,7 +6,7 @@
 3. ask_claude — 可选：有 API Key 时发一次请求（见下方 __main__）
 
 有 Key 时可在仓库根目录执行：
-  python 09_claude_sdk/practice.py
+  python 10_claude_sdk/practice.py
 """
 
 from __future__ import annotations

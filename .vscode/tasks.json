@@ -12,10 +12,11 @@
         "03_collections",
         "04_functions",
         "05_oop",
-        "06_exceptions_io",
-        "07_typing",
-        "08_mini_api",
-        "09_claude_sdk"
+        "06_async",
+        "07_exceptions_io",
+        "08_typing",
+        "09_mini_api",
+        "10_claude_sdk"
       ],
       "default": "02_control_flow"
     }
