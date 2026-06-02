@@ -2,16 +2,19 @@ import asyncio
 import time
 
 
+# 模拟一个任务
 async def agent_task(name: str, delay: float) -> str:
     await asyncio.sleep(delay)
     return f"{name} 完成"
 
 
+# 打印日志
 def log(msg: str, t0: float) -> None:
     elapsed = time.perf_counter() - t0
     print(f"[{elapsed:5.2f}s] {msg}")
 
 
+# 验证 asyncio.gather 的用法
 async def asyncio_gather() -> None:
     print("\n=== asyncio.gather（全部完成后，按提交顺序一次性返回）===")
     t0 = time.perf_counter()
@@ -29,6 +32,7 @@ async def asyncio_gather() -> None:
     log("gather 结束", t0)
 
 
+# 验证 asyncio.as_completed 的用法
 async def asyncio_as_completed() -> None:
     print("\n=== asyncio.as_completed（先完成的先收到）===")
     t0 = time.perf_counter()
@@ -45,6 +49,7 @@ async def asyncio_as_completed() -> None:
     log("as_completed 遍历结束", t0)
 
 
+# 验证 asyncio.gather 和 asyncio.as_completed 的用法
 async def main() -> None:
     await asyncio_gather()
     await asyncio_as_completed()
