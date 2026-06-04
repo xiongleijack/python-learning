@@ -58,6 +58,7 @@ pip install -r requirements.txt   # 第 9、10 章需要
 - [ ] 08 类型标注
 - [ ] 09 实战：Mini API
 - [ ] 10 Claude SDK API
+- [ ] **实战** [智能体路线图](docs/agent-roadmap.md) → `projects/doc-agent`、`projects/sql-agent`
 
 ## 目录
 
@@ -74,6 +75,11 @@ python-learning/
 ├── 08_typing/
 ├── 09_mini_api/
 ├── 10_claude_sdk/
+├── docs/
+│   └── agent-roadmap.md   # 智能体实战计划
+├── projects/
+│   ├── doc-agent/         # 文档问答
+│   └── sql-agent/         # SQL + Review 工作流
 ├── run-lesson.ps1
 └── requirements.txt
 ```
@@ -142,3 +148,5 @@ git push -u origin main
 - [FastAPI 教程](https://fastapi.tiangolo.com/zh/)
 - [Anthropic Python SDK](https://platform.claude.com/docs/en/api/sdks/python)
 - [Messages API 指南](https://platform.claude.com/docs/en/build-with-claude/working-with-messages)
+- [智能体实战计划](docs/agent-roadmap.md)
+- [列表推导式 vs 生成器表达式](docs/list-vs-generator.md)

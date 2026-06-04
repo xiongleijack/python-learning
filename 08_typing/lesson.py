@@ -9,7 +9,6 @@ Java Optional<T>      T | None
 
 from typing import Callable
 
-
 def find_first(items: list[str], predicate: Callable[[str], bool]) -> str | None:
     for item in items:
         if predicate(item):
@@ -27,4 +26,3 @@ def demo_union() -> None:
 if __name__ == "__main__":
     tools = ["git", "ai", "permission"]
     result = find_first(tools, lambda x: x.startswith("a"))
-    print(result)

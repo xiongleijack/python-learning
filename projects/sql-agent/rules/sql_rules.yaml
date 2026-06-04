@@ -1,0 +1,21 @@
+# SQL 生成与执行规则（可按业务修改）
+
+allowed_tables:
+  - bond
+  - bond_price
+  - order
+
+forbidden_keywords:
+  - DELETE
+  - DROP
+  - TRUNCATE
+  - ALTER
+  - INSERT
+  - UPDATE
+
+require_limit: true
+default_limit: 1000
+
+schema_hint: |
+  bond(code, name, issuer)
+  bond_price(bond_code, price, trade_date)
