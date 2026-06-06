@@ -7,7 +7,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
+from langchain_openai.chat_models import ChatOpenAI
 
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
