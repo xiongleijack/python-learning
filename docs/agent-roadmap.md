@@ -13,6 +13,8 @@
 
 以后若只做「自动生成 SQL 文件 + 开 PR」可单独开 POC；执行与校验仍走 `projects/sql-agent/`。
 
+**LangChain 学习**：完成第 10 章后选做 **`12_langchain/`**（LCEL、文档加载、简易 RAG），可加速 `doc-agent`；主栈仍以 `anthropic` SDK 为准，LangGraph 留待 workflow 变复杂时再上。
+
 ---
 
 ## 目标

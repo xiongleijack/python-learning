@@ -28,12 +28,7 @@ import os
 import sys
 from typing import Any
 
-# 默认模型：可按账号权限改成 claude-sonnet-4-6、claude-haiku-4-5 等
-DEFAULT_MODEL = "claude-sonnet-4-6"
-
-
-def load_api_key() -> str | None:
-    """优先读环境变量；若安装了 python-dotenv 则加载仓库根目录 .env。"""
+def load_env() -> None:
     try:
         from dotenv import load_dotenv
 
@@ -41,7 +36,23 @@ def load_api_key() -> str | None:
         load_dotenv(os.path.join(root, ".env"))
     except ImportError:
         pass
+
+
+def load_api_key() -> str | None:
+    """优先读环境变量；若安装了 python-dotenv 则加载仓库根目录 .env。"""
+    load_env()
     return os.environ.get("ANTHROPIC_API_KEY")
+
+
+def get_model() -> str:
+    load_env()
+    return os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-6")
+
+
+def get_max_tokens(default: int = 1024) -> int:
+    load_env()
+    raw = os.environ.get("ANTHROPIC_MAX_TOKENS")
+    return int(raw) if raw else default
 
 
 def extract_text(message: Any) -> str:
@@ -69,7 +80,7 @@ def demo_basic(client: Any) -> None:
 
     assert isinstance(client, Anthropic)
     message = client.messages.create(
-        model=DEFAULT_MODEL,
+        model=get_model(),
         max_tokens=256,
         messages=[{"role": "user", "content": "用中文说：SDK 已连通"}],
     )
@@ -80,7 +91,7 @@ def demo_basic(client: Any) -> None:
 
 def demo_system(client: Any) -> None:
     message = client.messages.create(
-        model=DEFAULT_MODEL,
+        model=get_model(),
         max_tokens=256,
         system="你是简洁的技术助教，回答用中文，不超过 80 字。",
         messages=[{"role": "user", "content": "什么是 max_tokens？"}],
@@ -92,7 +103,7 @@ def demo_system(client: Any) -> None:
 def demo_stream(client: Any) -> None:
     print("--- 流式输出 ---")
     with client.messages.stream(
-        model=DEFAULT_MODEL,
+        model=get_model(),
         max_tokens=128,
         messages=[{"role": "user", "content": "从 1 数到 5，每行一个数字"}],
     ) as stream:
@@ -118,7 +129,10 @@ def main() -> None:
         print("请先安装：pip install anthropic python-dotenv", file=sys.stderr)
         sys.exit(1)
 
-    client = Anthropic(api_key=api_key)
+    client = Anthropic(
+        api_key=api_key,
+        base_url=os.environ.get("ANTHROPIC_BASE_URL") or None,
+    )
     demo_basic(client)
     demo_system(client)
     demo_stream(client)

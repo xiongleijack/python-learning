@@ -17,12 +17,12 @@ python --version
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt   # 第 9、10 章需要
+pip install -r requirements.txt   # 第 9～12 章需要
 ```
 
 ## 怎么用
 
-1. 按 `00` → `10` 顺序学习。
+1. 按 `00` → `12` 顺序学习（第 11 章 Excel、第 12 章 LangChain 可在 10 章后选做）。
 2. 每章先跑 `lesson.py`，再完成 `practice.py`。
 3. 一键跑某一章：
 
@@ -58,6 +58,8 @@ pip install -r requirements.txt   # 第 9、10 章需要
 - [ ] 08 类型标注
 - [ ] 09 实战：Mini API
 - [ ] 10 Claude SDK API
+- [ ] 11 Excel：按行拆分
+- [ ] 12 LangChain 入门
 - [ ] **实战** [智能体路线图](docs/agent-roadmap.md) → `projects/doc-agent`、`projects/sql-agent`
 
 ## 目录
@@ -75,6 +77,8 @@ python-learning/
 ├── 08_typing/
 ├── 09_mini_api/
 ├── 10_claude_sdk/
+├── 11_excel/              # Excel 按行拆分
+├── 12_langchain/          # LangChain LCEL + RAG 入门
 ├── docs/
 │   └── agent-roadmap.md   # 智能体实战计划
 ├── projects/
@@ -96,6 +100,7 @@ python-learning/
 | `CompletableFuture` / `@Async` | `async def` + `await`（第 6 章） |
 | `Spring Boot` | FastAPI（第 9 章） |
 | HTTP 客户端调 LLM | Anthropic SDK（第 10 章） |
+| LLM 应用框架 | LangChain LCEL（第 12 章） |
 | 花括号 `{}` | **缩进** |
 
 ## 学习节奏（建议 4～5 周）
@@ -107,6 +112,29 @@ python-learning/
 | 3 | 06～08 | 异步、IO、类型 |
 | 4 | 09 | 写一个小 API |
 | 5 | 10 | Claude SDK |
+| 选做 | 11 | Excel 办公自动化 |
+| 选做 | 12 | LangChain（doc-agent 加速） |
+
+## 第 12 章：LangChain 速查
+
+| 概念 | 说明 |
+|------|------|
+| 安装 | `pip install langchain langchain-anthropic langchain-community` |
+| LCEL | `chain = prompt \| llm \| StrOutputParser()` |
+| 调用 | `chain.invoke({"topic": "..."})` |
+| 文档 | `TextLoader` + `RecursiveCharacterTextSplitter` |
+| RAG | `VectorStore` + `retriever` + LCEL |
+| 运行 | `python 12_langchain/lesson.py` |
+
+## 第 11 章：Excel 速查
+
+| 概念 | 说明 |
+|------|------|
+| 安装 | `pip install openpyxl` |
+| 读表 | `load_workbook(path, read_only=True)` |
+| 写表 | `Workbook()` → `ws.append(row)` → `save()` |
+| 运行 demo | `python 11_excel/lesson.py` |
+| 练习 | 实现 `split_excel(source, output_dir, rows_per_file)` |
 
 ## 第 6 章：异步速查
 
@@ -150,3 +178,4 @@ git push -u origin main
 - [Messages API 指南](https://platform.claude.com/docs/en/build-with-claude/working-with-messages)
 - [智能体实战计划](docs/agent-roadmap.md)
 - [列表推导式 vs 生成器表达式](docs/list-vs-generator.md)
+- [LangChain 文档](https://python.langchain.com/docs/introduction/)

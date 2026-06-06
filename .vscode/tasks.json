@@ -16,7 +16,9 @@
         "07_exceptions_io",
         "08_typing",
         "09_mini_api",
-        "10_claude_sdk"
+        "10_claude_sdk",
+        "11_excel",
+        "12_langchain"
       ],
       "default": "02_control_flow"
     }
