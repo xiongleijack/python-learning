@@ -39,9 +39,24 @@ def calculate(expression: str) -> str:
     except Exception as e:
         return f"计算失败：{e}"
 
+
+# 定义一个 search_order(order_id: str) 
+@tool
+def search_order(order_id: str) -> str:
+    """根据订单号搜索订单，输入订单号，返回订单信息，不要超过100个字。"""
+    # 实际项目里这里调真实搜索引擎 API
+    # 现在先 mock 数据
+    search_data = {
+        "123456": "订单号：123456，订单状态：已支付，订单金额：100元",
+        "123457": "订单号：123457，订单状态：已支付，订单金额：200元",
+        "123458": "订单号：123458，订单状态：已支付，订单金额：300元",
+    }
+    return search_data.get(order_id, f"暂无 {order_id} 的订单数据，请输入正确的订单号。")
+
+
 # 绑定工具到模型
 llm = ChatOpenAI(model=MODEL, api_key=API_KEY, base_url=API_BASE, temperature=0)
-llm_with_tools = llm.bind_tools([get_weather, calculate])
+llm_with_tools = llm.bind_tools([get_weather, calculate, search_order])
 
 # 直接调用（还不是 Agent，模型只是决定要不要用工具）
 response = llm_with_tools.invoke("北京今天天气怎么样？")
@@ -50,11 +65,9 @@ print(response.tool_calls)  # 看模型选了哪个工具，传了什么参数
 response = llm_with_tools.invoke("1 + 1 = ?")
 print(response.tool_calls)
 
-response = llm_with_tools.invoke("上海今天天气怎么样？")
+response = llm_with_tools.invoke("上海今天天气怎么样？")    
 print(response.tool_calls)
 
-response = llm_with_tools.invoke("广州今天天气怎么样？")
+response = llm_with_tools.invoke("123456 订单信息怎么样？")
 print(response.tool_calls)
 
-response = llm_with_tools.invoke("北京今天天气怎么样？")
-print(response.tool_calls)  
