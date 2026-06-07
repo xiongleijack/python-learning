@@ -81,6 +81,8 @@ def ask(question: str) -> str:
     return str(last)
 
 
-print(ask("北京天气怎么样？"))
-print(ask("1 + 1 = ?"))
-print(ask("123456 订单信息怎么样？"))
+# print(ask("北京天气怎么样？"))
+# print(ask("1 + 1 = ?"))
+# print(ask("123456 订单信息怎么样？"))
+# 问一个没在工具列表中的问题，模型会怎么回答？
+print(ask("刘若英的歌曲有哪些？"))
