@@ -93,3 +93,7 @@ r3 = app.invoke(
     config=config2,
 )
 print("user_002：", r3["messages"][-1].content)  # 不知道名字
+
+# 查看对话历史
+print(app.get_state(config).values["messages"])
+print(app.get_state(config2).values["messages"])
