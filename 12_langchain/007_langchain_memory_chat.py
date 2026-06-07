@@ -59,3 +59,6 @@ print("第二轮：", r2)
 
 r3 = chain_with_history.invoke({"input": "我们聊了什么？"}, config=config)
 print("第三轮：", r3)
+
+r4 = chain_with_history.invoke({"input": "我们聊了什么？"}, config={"configurable": {"session_id": "user_002"}})
+print("第四轮：", r4)
