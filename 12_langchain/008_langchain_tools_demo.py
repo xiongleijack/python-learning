@@ -70,4 +70,5 @@ print(response.tool_calls)
 
 response = llm_with_tools.invoke("123456 订单信息怎么样？")
 print(response.tool_calls)
+print(response.content)
 
