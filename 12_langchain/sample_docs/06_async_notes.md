@@ -12,3 +12,9 @@
 
 - gather：要完整结果、顺序固定 → 用 gather
 - as_completed：先完先处理 → 用 as_completed
+
+✅ prompt | llm | parser  基础链
+✅ temperature 的作用
+✅ RunnableParallel 并行执行
+005_claude_teacher_langchain.py
+006_claude_teacher_langchain paraller.py
