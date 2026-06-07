@@ -1,13 +1,22 @@
+"""LangChain Agent 示例（LangChain 1.x 用 create_agent，配置见 .env 的 OPENAI_*）
+
+与 008 的区别：008 只 bind_tools，模型决定调什么工具但不执行；
+本文件用 create_agent 自动循环：选工具 → 执行 → 再喂给模型 → 直到给出最终答案。
+
+旧版 AgentExecutor / create_tool_calling_agent 已移到 langchain-classic，此处用新 API。
+"""
+
 from __future__ import annotations
+
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
-from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
+from langchain.agents import create_agent
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.tools import tool
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.agents import create_tool_calling_agent, AgentExecutor
-import os
+from langchain_openai import ChatOpenAI
+
 
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
@@ -19,8 +28,7 @@ MODEL = os.environ.get("OPENAI_MODEL", "gpt-4.1-mini")
 if not API_KEY:
     raise RuntimeError("请在 .env 配置 OPENAI_API_KEY")
 
-# 定义工具
-# 1. 定义工具
+
 @tool
 def get_weather(city: str) -> str:
     """根据城市名查询当前天气。"""
@@ -31,6 +39,7 @@ def get_weather(city: str) -> str:
     }
     return data.get(city, f"暂无 {city} 的天气数据")
 
+
 @tool
 def calculate(expression: str) -> str:
     """计算数学表达式，输入合法的 Python 表达式。"""
@@ -39,36 +48,39 @@ def calculate(expression: str) -> str:
     except Exception as e:
         return f"计算失败：{e}"
 
+
 @tool
 def search_order(order_id: str) -> str:
     """根据订单号查询订单状态。"""
     orders = {
-        "12345": "已发货，预计明天送达",
+        "123456": "已发货，预计明天送达",
         "67890": "备货中，尚未发货",
     }
     return orders.get(order_id, f"订单 {order_id} 不存在")
 
+
 tools = [get_weather, calculate, search_order]
 
-# 2. 定义 prompt（agent_scratchpad 是 Agent 记录思考过程的地方）
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "你是一个智能助手，尽可能使用工具回答用户问题，用中文回答。"),
-    MessagesPlaceholder(variable_name="chat_history", optional=True),
-    ("human", "{input}"),
-    MessagesPlaceholder(variable_name="agent_scratchpad"),  # ← Agent 专用
-])
-
 llm = ChatOpenAI(model=MODEL, api_key=API_KEY, base_url=API_BASE, temperature=0)
-agent = create_tool_calling_agent(llm, tools, prompt)
 
- # ← 打开 verbose=True 后能看到 Agent 每一步的思考过程
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+# debug=True 会在终端打印 Agent 每一步（类似旧版 verbose=True）
+agent = create_agent(
+    model=llm,
+    tools=tools,
+    system_prompt="你是一个智能助手，尽可能使用工具回答用户问题，用中文回答。",
+    debug=True,
+)
 
-response = agent_executor.invoke({"input": "北京今天天气怎么样？"})
-print(response["output"])
 
-response = agent_executor.invoke({"input": "1 + 1 = ?"})
-print(response["output"])
+def ask(question: str) -> str:
+    """create_agent 返回 messages 列表，最后一条 AIMessage 即最终回答。"""
+    result = agent.invoke({"messages": [HumanMessage(content=question)]})
+    last = result["messages"][-1]
+    if isinstance(last, AIMessage):
+        return last.content
+    return str(last)
 
-response = agent_executor.invoke({"input": "123456 订单信息怎么样？"})
-print(response["output"])
+
+print(ask("北京天气怎么样？"))
+print(ask("1 + 1 = ?"))
+print(ask("123456 订单信息怎么样？"))
