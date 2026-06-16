@@ -18,14 +18,28 @@ from shared.config import OPENAI_API_KEY, OPENAI_BASE_URL, OPENAI_MODEL, require
 
 require_openai()
 
+# 1 输入提示
 prompt = ChatPromptTemplate.from_messages(
     [
         ("system", "你是易速鲜花文案助手，输出简洁中文。"),
         ("human", "为{occasion}写一句 20 字以内的订花推荐语"),
     ]
 )
-llm = ChatOpenAI(model=OPENAI_MODEL, api_key=OPENAI_API_KEY, base_url=OPENAI_BASE_URL, temperature=0.8)
-parser = StrOutputParser()
 
-chain = prompt | llm | parser
-print(chain.invoke({"occasion": "母亲节"}))
+# 2 调用模型
+llm = ChatOpenAI(model=OPENAI_MODEL, api_key=OPENAI_API_KEY, base_url=OPENAI_BASE_URL, temperature=0.8)
+
+# 3 解析输出
+# 3.1 文本输出
+parser = StrOutputParser()
+chain_text = prompt | llm | parser
+result = chain_text.invoke({"occasion": "母亲节"})
+print("文本输出：", result)
+
+# 3.2 JSON 输出
+parser = JsonOutputParser()
+chain_json = prompt | llm | parser
+result = chain_json.invoke({"occasion": "母亲节"})
+print("JSON输出：", result)
+
+
