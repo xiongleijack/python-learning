@@ -1,6 +1,11 @@
 from ast import main
+import logging
+from math import log
 import re
+from tkinter import E
 
+
+logger = logging.getLogger(__name__)
 
 def front_back(str):
   if len(str) <= 1:
@@ -67,6 +72,27 @@ def create_prompt(system, user, temperature=0.7):
 def parse_weather(weather,temperature):
     return weather, temperature
 
+
+# 函数作为参数, 失败重试三次
+def call_with_retry(func, retries = 3):
+    for i in range(retries):
+        try:
+            func()
+            break
+        except Exception as e:
+            logger.warning("第 %s 次失败", i + 1, exc_info=True)
+            print(e)
+            print(type(e))
+            continue
+
+# 模拟一个可能失败的函数
+def unstable_call():
+    import random
+    if random.random() < 0.5:
+        raise Exception("随机失败")
+    return "成功"
+
+
 if __name__ == "__main__":
     # front_back("abcd")
     # str_practice("xionglei")/
@@ -77,4 +103,4 @@ if __name__ == "__main__":
     # print(greet("bbb", "aaa"))
     # change()
     # print(a)
-    # print(squre(5))
+    call_with_retry(unstable_call)
