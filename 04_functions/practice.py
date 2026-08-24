@@ -1,4 +1,5 @@
 from ast import main
+import re
 
 
 def front_back(str):
@@ -19,6 +20,61 @@ def str_practice(str):
     print(str[-1])
     print(str[1:-1])
 
+
+# 函数定义 -> 不声明类型
+def sum1(a,b):
+    return a + b
+
+# 函数定义 -> 声明类型
+def sum(a: int,b: int) -> int:
+    return a + b
+
+# 函数定义 -> 默认值
+def sum2(a, b=2) -> int:
+    return a + b
+
+# 默认参数（类似Java重载）
+def greet(name, greeting="Hello"):
+    return greeting + " " + name
+
+# 返回元组
+def get_user():
+    return "Alice", 25   # 返回元组，可以"返回多个值"
+
+
+# 函数作用域, 声明要修改全局变量
+a = 10
+def change():
+    # 声明修改全局变量
+    global a
+    a = 20
+    print(a)
+
+
+# 练习平方值
+def squre(a):
+    return a ** 2
+
+# 创建数据字典
+def create_prompt(system, user, temperature=0.7):
+    return {
+        "system": system,
+        "user": user,
+        "temperature": temperature
+    } 
+
+# 返回元组
+def parse_weather(weather,temperature):
+    return weather, temperature
+
 if __name__ == "__main__":
     # front_back("abcd")
-    str_practice("xionglei")
+    # str_practice("xionglei")/
+    # print(sum2(10))
+    # print(get_user())
+    # python 里面可以指定顺序，以下两行代码得到的结果是一样的
+    # print(greet(greeting = "aaa", name = "bbb"))
+    # print(greet("bbb", "aaa"))
+    # change()
+    # print(a)
+    # print(squre(5))
