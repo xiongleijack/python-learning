@@ -52,15 +52,15 @@ print("-" * 10)
 # 题 1：用 for 把 names 里的每个名字逐个放进 copied（不要写 copied = names）
 # 通关标准：copied == ["git", "ai", "permission"]
 copied = []
-# TODO: for name in names: copied.append(name)
+# TODO
 
 # 题 2：用 for 数 names 里有多少个名字，放到 count
 # 通关标准：count == 3
 count = 0
-# TODO: for name in names: count += 1
+# TODO
 
-assert copied == ["git", "ai", "permission"], "题 1：应用 for 把名字逐个 append 进 copied"
-assert count == 3, "题 2：每循环一次 count += 1，最后应是 3"
+assert copied == ["git", "ai", "permission"], "题 1 未通过"
+assert count == 3, "题 2 未通过"
 print("for 遍历关卡通关 ✓")
 print("-" * 10)
 
@@ -74,15 +74,15 @@ print("-" * 10)
 # 题 1：用 for + range 得到 0 到 4，放进 nums
 # 通关标准：nums == [0, 1, 2, 3, 4]
 nums = []
-# TODO: for i in range(5): nums.append(i)
+# TODO
 
 # 题 2：用 for + range 得到 1、2、3 的平方，放进 squares
 # 通关标准：squares == [1, 4, 9]
 squares = []
-# TODO: for i in range(1, 4): squares.append(i * i)
+# TODO
 
-assert nums == [0, 1, 2, 3, 4], "题 1：range(5) 是 0,1,2,3,4"
-assert squares == [1, 4, 9], "题 2：range(1, 4) 是 1,2,3，再各自平方"
+assert nums == [0, 1, 2, 3, 4], "题 1 未通过"
+assert squares == [1, 4, 9], "题 2 未通过"
 print("for range 关卡通关 ✓")
 print("-" * 10)
 
@@ -97,13 +97,13 @@ print("=== while ===")
 # 通关标准：countdown == [3, 2, 1]
 countdown = []
 n = 3
-# TODO: while n > 0: 把 n 放进 countdown，然后 n -= 1
+# TODO
 
 # 题 2：用 while 从 1 加到 5，把数字依次放进 up
 # 通关标准：up == [1, 2, 3, 4, 5]
 up = []
 n = 1
-# TODO: while n <= 5: 把 n 放进 up，然后 n += 1
+# TODO
 
 assert countdown == [3, 2, 1], "题 1：从 3 倒数到 1"
 assert up == [1, 2, 3, 4, 5], "题 2：从 1 加到 5"

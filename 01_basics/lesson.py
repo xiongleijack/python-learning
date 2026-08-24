@@ -18,7 +18,7 @@ def demo_types() -> None:
     print(type(age), type(price), type(name), type(active), type(nothing))
 
 
-def demo_strings() -> None:
+def demo_strings(str) -> None:
     # f-string ≈ Java 15+ 的 formatted string
     user = "Bob"
     print(f"Hello, {user}!")
@@ -35,6 +35,12 @@ def demo_strings() -> None:
     text = "  daily-dev-tools  "
     print(text.strip().upper())
 
+    # str 里面的截断
+    print(str[0])
+    print(str[1])
+    print(str[-1])
+    print(str[1:-1])
+
 
 def demo_input_output() -> None:
     # 学习阶段可注释掉 input，避免阻塞自动化运行
@@ -44,6 +50,6 @@ def demo_input_output() -> None:
 
 
 if __name__ == "__main__":
-    demo_types()
-    demo_strings()
-    demo_input_output()
+    # demo_types()
+    demo_strings("测试数据同步")
+    # demo_input_output()

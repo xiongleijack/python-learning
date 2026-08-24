@@ -1,18 +1,24 @@
-def add(a,b):
-    return a + b
-
-def add_new(a: int, b: int) -> int:
-    return a + b
-
-def add_many(*args):
-    return sum(args)
-
-def add_many_kwargs(**kwargs):
-    return sum(kwargs.values())
-
-print(add(1, 2))
-print(add_many(1, 2, 3, 4, 5))
-print(add_many_kwargs(a=1, b=2, c=3))
+from ast import main
 
 
-input_str = input("请输入一个字符串: ")
+def front_back(str):
+  if len(str) <= 1:
+    return str
+  a = str[0]
+  print(a)
+  b = str[-1]
+  print(b)
+  c = str[1:len(str) - 1]
+  print(c)
+  return a + b + c
+
+
+def str_practice(str):
+    print(str[0])
+    print(str[1])
+    print(str[-1])
+    print(str[1:-1])
+
+if __name__ == "__main__":
+    # front_back("abcd")
+    str_practice("xionglei")
