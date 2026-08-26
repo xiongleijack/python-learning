@@ -1,13 +1,9 @@
-"""练习：返回 1..n 的平方列表。例：squares(3) -> [1, 4, 9]"""
+"""练习：用 for 循环把 1..3 的平方放进 result。期望 [1, 4, 9]"""
 
-
-def squares(n: int) -> list[int]:
-    result: list[int] = []
-    # TODO: 用 for 循环 append
-    return result
-
+result = []
+n = 3
+# TODO: 用 for 循环 append 平方，例如 for i in range(1, n + 1):
 
 if __name__ == "__main__":
-    assert squares(3) == [1, 4, 9]
-    assert squares(0) == []
+    assert result == [1, 4, 9]
     print("practice 02 通过 ✓")
