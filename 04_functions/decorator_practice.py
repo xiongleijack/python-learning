@@ -207,8 +207,8 @@ def slow_sum(n: int) -> int:
     return sum(range(n))
 
 
-print(slow_sum(1_000_000))
-print("-" * 10)
+# print(slow_sum(1_000_000))
+# print("-" * 10)
 
 # 练习 3：写 cache_simple 装饰器，对无参函数缓存第一次结果（用闭包变量 dict）
 # 通关：两次调用 expensive() 只 print 一次 "computing..."
@@ -233,9 +233,9 @@ def expensive() -> int:
     return 42
 
 
-print(expensive())
-print(expensive())
-print("-" * 10)
+# print(expensive())
+# print(expensive())
+# print("-" * 10)
 
 
 # =============================================================================
@@ -253,8 +253,8 @@ print("=== 第 5 关：和 @tool 的关系 ===")
 # @tool 也是装饰器：把普通函数变成 BaseTool，并读取 docstring 给模型看。
 # 你已经在 12_langchain/008、009 里用过了，只是当时没展开语法。
 
-print("装饰器 = 在不改原函数代码的前提下，给函数「加一层行为」")
-print("-" * 10)
+# print("装饰器 = 在不改原函数代码的前提下，给函数「加一层行为」")
+# print("-" * 10)
 
 
 # =============================================================================
