@@ -17,6 +17,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from pydantic_core.core_schema import JsonSchema
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from pydantic import BaseModel, Field, ValidationError
@@ -64,6 +66,8 @@ def gate1_json() -> None:
 def gate2_json_schema() -> None:
     print("\n=== 第 2 关：JSON Schema（静态蓝图）===")
 
+    JsonSchema1 = Resume.model_dump_json()
+    
     # Pydantic 可导出 JSON Schema（设计文档 / API 契约常用）
     schema: dict[str, Any] = Resume.model_json_schema()
     print("Resume 的 JSON Schema（节选）：")
@@ -224,6 +228,17 @@ def gate1_json_practice() -> None:
 
 # TODO-2（第 3 关）：把 experience_years 的 le=50 改成 le=10，再喂 15 年经验，看谁报错
 
+# 手写的 json schema 文件
+RESUME_SCHEMA = {
+    "type": "object",
+    "required": ["name", "experience_years"],
+    "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "experience_years": {"type": "integer", "minimum": 0, "maximum": 50},
+    },
+}
+
+# 数据 data_info something
 
 
 # TODO-3（第 4 关）：故意在 prompt 里要求「用中文写经验年数」，看 Structured Output
