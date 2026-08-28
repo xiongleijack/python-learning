@@ -46,8 +46,8 @@ def say_hello(name: str) -> str:
 
 
 # 手动装饰：say_hello = shout(say_hello)
-say_hello = shout(say_hello)
-say_hello("测试装饰器")
+# say_hello = shout(say_hello)
+# say_hello("测试装饰器")
 
 
 # =============================================================================
@@ -69,8 +69,8 @@ def add(a: int, b: int) -> int:
     return a + b
 
 
-print(add(2, 3))
-print("-" * 10)
+# print(add(2, 3))
+# print("-" * 10)
 
 # 练习 1：写装饰器 uppercase_result，让函数返回值变成大写字符串
 # 通关：@uppercase_result 装饰 greet 后，greet("java") == "HELLO, JAVA"
@@ -84,13 +84,12 @@ def uppercase_result(func: Callable) -> Callable:
 def output_str(str: str) -> str:
     return str
 
-print(output_str("python 你好"))
+# print(output_str("python 你好"))
 
 # =============================================================================
 # 第 2 关：functools.wraps —— 保留原函数名字和文档
 # =============================================================================
-print("=== 第 2 关：wraps ===")
-
+# print("=== 第 2 关：wraps ===")
 
 def bad_decorator(func: Callable) -> Callable:
     def wrapper(*args, **kwargs):
@@ -100,7 +99,8 @@ def bad_decorator(func: Callable) -> Callable:
 
 
 def good_decorator(func: Callable) -> Callable:
-    @functools.wraps(func)  # 把 __name__、__doc__ 复制回 wrapper
+    # @functools.wraps(func)  # 把 __name__、__doc__ 复制回 wrapper
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
@@ -119,9 +119,9 @@ def bar() -> None:
     pass
 
 
-print("bad:", foo.__name__, foo.__doc__)
-print("good:", bar.__name__, bar.__doc__)
-print("-" * 10)
+# print("bad:", foo.__name__, foo.__doc__)
+# print("good:", bar.__name__, bar.__doc__)
+# print("-" * 10)
 
 
 # =============================================================================
@@ -149,8 +149,8 @@ def ping(msg: str) -> None:
     print(msg)
 
 
-ping("pong")
-print("-" * 10)
+# ping("pong")
+# print("-" * 10)
 
 # 练习 2：实现 @prefix("【易速鲜花】")，把返回值前面加上前缀
 # 通关：say_price("玫瑰") == "【易速鲜花】玫瑰 8 元/支"
