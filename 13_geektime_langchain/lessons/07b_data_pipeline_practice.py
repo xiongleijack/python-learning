@@ -136,6 +136,28 @@ def gate3_pydantic() -> None:
 # =============================================================================
 # 第 4 关：Structured Output —— 「命题作文」（约束模型生成）
 # =============================================================================
+#
+# 说明：OpenAI 可用 llm.with_structured_output(Resume)（json_schema）。
+# DeepSeek 等模型常报「This response_format type is unavailable now」，
+# 改用「format_instructions + PydanticOutputParser」——契约仍是同一份 Resume。
+
+
+def _resume_extract_chain(llm):
+    """跨模型可用的结构化抽取：Schema 进 prompt → 模型出 JSON → Pydantic 校验。"""
+    from langchain_core.output_parsers import PydanticOutputParser
+    from langchain_core.prompts import ChatPromptTemplate
+
+    parser = PydanticOutputParser(pydantic_object=Resume)
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                "你是招聘助手。只输出合法 JSON，不要 markdown，不要解释。\n\n{format_instructions}",
+            ),
+            ("human", "{text}"),
+        ]
+    ).partial(format_instructions=parser.get_format_instructions())
+    return prompt | llm | parser
 
 
 def gate4_structured_output() -> None:
@@ -154,26 +176,24 @@ def gate4_structured_output() -> None:
         temperature=0,
     )
 
-    # 关键：把 Pydantic 模型交给 with_structured_output
-    # → 模型按同一份契约生成，返回值往往已是 Resume 实例（或可再校验）
-    structured_llm = llm.with_structured_output(Resume)
+    chain = _resume_extract_chain(llm)
 
     raw_resume = """
     姓名：王芳
     做过 4 年电商客服，熟悉退换货与投诉处理，会用飞书和 Excel。
     """
-    result = structured_llm.invoke(
-        "你是招聘助手。从下面文本提取简历字段。"
-        "岗位「客服专员」要求工作经验 ≥ 2 年，据此设置 is_qualified。\n\n"
-        f"{raw_resume}"
+    result = chain.invoke(
+        {
+            "text": (
+                "从下面文本提取简历字段。"
+                "岗位「客服专员」要求工作经验 ≥ 2 年，据此设置 is_qualified。\n\n"
+                f"{raw_resume}"
+            )
+        }
     )
     print("模型结构化输出：", result)
     print("类型：", type(result))
-    if isinstance(result, Resume):
-        print("字段访问：", result.name, result.experience_years, result.is_qualified)
-    elif isinstance(result, dict):
-        # 少数实现返回 dict，再用同一份模型校验一次
-        print("再过 Pydantic：", Resume.model_validate(result))
+    print("字段访问：", result.name, result.experience_years, result.is_qualified)
 
 
 # =============================================================================
@@ -196,16 +216,14 @@ def pipeline_demo() -> None:
         base_url=OPENAI_BASE_URL,
         temperature=0,
     )
-    structured_llm = llm.with_structured_output(Resume)
+    chain = _resume_extract_chain(llm)
 
     text = "李雷，1 年客服经验，会接待话术和工单系统。"
-    obj = structured_llm.invoke(
-        "提取简历。岗位要求 ≥2 年经验，据此判断 is_qualified。\n" + text
+    obj = chain.invoke(
+        {
+            "text": "提取简历。岗位要求 ≥2 年经验，据此判断 is_qualified。\n" + text,
+        }
     )
-    if isinstance(obj, dict):
-        obj = Resume.model_validate(obj)
-    elif not isinstance(obj, Resume):
-        raise TypeError(f"unexpected type: {type(obj)}")
 
     # 「落地」：干净对象 → JSON 字符串（可写入 DB / 消息队列）
     stored = obj.model_dump_json(indent=2)
