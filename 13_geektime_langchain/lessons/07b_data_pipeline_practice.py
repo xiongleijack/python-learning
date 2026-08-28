@@ -249,13 +249,13 @@ RESUME_SCHEMA = {
 
 def main() -> None:
     # gate1_json()
-    gate1_json_practice()
+    # gate1_json_practice()
     # gate2_json_schema()
     # gate3_pydantic()
     # 需要 API；若只想练 1～3 关，可注释下面两行
     # gate4_structured_output()
-    # pipeline_demo()
-    print("\n完成。请打开本文件底部 TODO 自己改一改。")
+    pipeline_demo()
+    # print("\n完成。请打开本文件底部 TODO 自己改一改。")
 
 
 if __name__ == "__main__":
