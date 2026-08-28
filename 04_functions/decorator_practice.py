@@ -157,13 +157,12 @@ def ping(msg: str) -> None:
 
 
 def prefix(tag: str):
-    # TODO:
-    # def decorator(func):
-    #     @functools.wraps(func)
-    #     def wrapper(*args, **kwargs):
-    #         return tag + func(*args, **kwargs)
-    #     return wrapper
-    # return decorator
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            return tag + func(*args, **kwargs)
+        return wrapper
+    return decorator
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -179,9 +178,10 @@ def say_price(flower: str) -> str:
     return f"{flower} 8 元/支"
 
 
+# print(say_price("玫瑰"))
 # assert say_price("玫瑰") == "【易速鲜花】玫瑰 8 元/支", "练习 2 未通过"
-print("练习 2：改完 prefix 后取消 assert 注释")
-print("-" * 10)
+# print("练习 2：改完 prefix 后取消 assert 注释")
+# print("-" * 10)
 
 
 # =============================================================================
