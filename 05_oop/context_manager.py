@@ -1,4 +1,5 @@
 import time
+from typing import Self
 
 
 class Timer:
@@ -32,8 +33,9 @@ class DbConnection:
         """
         self.name = name
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         print(f"建立连接: {self.name}")
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         print(f"关闭连接: {self.name}")
@@ -42,5 +44,5 @@ class DbConnection:
         # False = 不抑制异常（异常继续向外传播）
         return False
 
-with DbConnection(name="测试链接"):
-    print("操作数据库")
+with DbConnection(name="测试链接") as db:
+    print(f"操作数据库{db.name}")
