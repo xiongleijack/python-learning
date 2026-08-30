@@ -146,3 +146,14 @@ print(book.model_dump_json())
 # 反序列化
 book = '{"title": "x", "price": 1}'
 Book.model_validate_json(book)
+
+class Item(BaseModel):
+    name: str = Field(description="项目名称")
+    age: int = Field(description="项目代码数据方式")
+
+    def a(self):
+        print(f"{self.name}, {self.age}")
+
+item = Item(name= "text", age="3")
+item.a()
+print(type(item.age))
