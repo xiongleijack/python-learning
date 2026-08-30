@@ -137,3 +137,12 @@ assert price_blocked is True, "题 3：price < 0 应 ValidationError"
 print("Pydantic 关卡通关 ✓")
 print("-" * 10)
 print("三关全部通关 ✓  JSON 管语法，Schema 管契约，Pydantic 管运行时校验。")
+
+# 序列化
+book = Book(title="python", price=39.9)
+print(book.model_dump())
+print(book.model_dump_json())
+
+# 反序列化
+book = '{"title": "x", "price": 1}'
+Book.model_validate_json(book)
