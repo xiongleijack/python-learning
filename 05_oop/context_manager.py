@@ -1,4 +1,6 @@
+import os
 import time
+from contextlib import contextmanager
 from typing import Self
 
 
@@ -46,3 +48,40 @@ class DbConnection:
 
 with DbConnection(name="测试链接") as db:
     print(f"操作数据库{db.name}")
+
+print("*" * 10 + " 更加简洁的写法 " + "*" * 10)
+
+
+@contextmanager
+def timer():
+    start = time.time()
+    print("开始计时")
+    yield                       # ← with 块的代码在这里执行
+    end = time.time()
+    print(f"耗时 {end - start:.3f} 秒")
+
+with timer():
+    print("正在执行")
+
+print("*" * 10 + " 简洁写法/写一个上下文管理器 cd(path)，进入时切换到指定目录，退出时切回原目录 " + "*" * 10)
+
+
+@contextmanager
+def pathChange(path: str):
+    # 切换
+    oldPath = os.getcwd()
+    os.chdir(path)
+    yield
+    os.chdir(oldPath)
+
+with pathChange("/Users/leixiong/Documents/"):
+    print("目录切换完成")
+
+
+def add(a: int, b: int) -> int:
+    return a + b
+
+print(add("1", "2"))     # 会报错吗？
+
+
+

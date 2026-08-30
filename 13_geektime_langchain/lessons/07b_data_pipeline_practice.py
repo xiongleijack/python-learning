@@ -17,8 +17,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from pydantic_core.core_schema import JsonSchema
-
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from pydantic import BaseModel, Field, ValidationError
@@ -66,9 +64,7 @@ def gate1_json() -> None:
 def gate2_json_schema() -> None:
     print("\n=== 第 2 关：JSON Schema（静态蓝图）===")
 
-    JsonSchema1 = Resume.model_dump_json()
-    
-    # Pydantic 可导出 JSON Schema（设计文档 / API 契约常用）
+    # model_dump_json() 是「一份简历数据」；model_json_schema() 才是「格子纸」
     schema: dict[str, Any] = Resume.model_json_schema()
     print("Resume 的 JSON Schema（节选）：")
     print(json.dumps(
