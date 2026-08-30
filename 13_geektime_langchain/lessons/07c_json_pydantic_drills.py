@@ -1,5 +1,5 @@
 """
-JSON → JSON Schema → Pydantic（三关）
+JSON → JSON Schema → Pydantic（四关）
 
 Java                         Python
 Jackson / Gson               json.loads / json.dumps
@@ -136,7 +136,57 @@ except ValidationError:
 assert price_blocked is True, "题 3：price < 0 应 ValidationError"
 print("Pydantic 关卡通关 ✓")
 print("-" * 10)
-print("三关全部通关 ✓  JSON 管语法，Schema 管契约，Pydantic 管运行时校验。")
+
+print("*" * 10 + " 第 4 关：嵌套模型 " + "*" * 10)
+# Java：Address 是另一个 DTO，Person 里有 private Address address
+# Pydantic：字段类型写成另一个 BaseModel，validate 时会递归校验
+
+
+class Address(BaseModel):
+    city: str
+    street: str
+
+
+class Person(BaseModel):
+    name: str
+    address: Address
+
+
+nested = Person.model_validate(
+    {"name": "Ada", "address": {"city": "上海", "street": "南京路"}}
+)
+print("嵌套访问：", nested.address.city, type(nested.address))
+
+# 导出来的 Schema 里，address 也是 object（或 $ref 指向 Address）
+addr_schema = Person.model_json_schema()
+print("Person 的字段：", list(addr_schema.get("properties", {}).keys()))
+
+# 练习 4：定义 Office
+# - name: str
+# - address: Address（复用上面的 Address，不要再写一遍 city/street）
+# 通关：
+#   Office.model_validate({"name": "HQ", "address": {"city": "北京", "street": "长安街"}})
+#   得到 office.address.city == "北京"
+#   缺少 street 时 ValidationError
+class Office(BaseModel):
+    # TODO
+    name: str = "placeholder"
+
+
+office_ok = None
+# TODO：用嵌套 dict 构造 office_ok
+
+assert office_ok is not None
+assert office_ok.address.city == "北京", "题 4：应能点到嵌套字段 city"
+assert isinstance(office_ok.address, Address), "题 4：address 应是 Address 对象，不是 dict"
+
+nested_blocked = False
+# TODO：校验 {"name": "HQ", "address": {"city": "北京"}}（缺 street），接到 ValidationError 则 nested_blocked = True
+
+assert nested_blocked is True, "题 4：内层缺字段也要拦住"
+print("嵌套模型关卡通关 ✓")
+print("-" * 10)
+print("四关全部通关 ✓  内层也是模型，不是普通 dict。")
 
 # 序列化
 book = Book(title="python", price=39.9)
