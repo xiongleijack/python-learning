@@ -59,7 +59,8 @@ pip install -r requirements.txt   # 第 9～12 章需要
 - [ ] 09 实战：Mini API
 - [ ] 10 Claude SDK API
 - [ ] 11 Excel：按行拆分
-- [ ] 12 LangChain 入门
+- [ ] 13 LangChain 课程跟练
+- [ ] 14 Agent 入门（`14_agent/`）
 - [ ] **实战** [智能体路线图](docs/agent-roadmap.md) → `projects/doc-agent`、`projects/sql-agent`
 
 ## 目录
@@ -79,6 +80,8 @@ python-learning/
 ├── 10_claude_sdk/
 ├── 11_excel/              # Excel 按行拆分
 ├── 12_langchain/          # LangChain LCEL + RAG 入门
+├── 13_geektime_langchain/ # 极客时间跟练
+├── 14_agent/              # Agent：工具 + 循环
 ├── docs/
 │   └── agent-roadmap.md   # 智能体实战计划
 ├── projects/
