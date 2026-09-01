@@ -81,7 +81,7 @@ python-learning/
 ├── 11_excel/              # Excel 按行拆分
 ├── 12_langchain/          # LangChain LCEL + RAG 入门
 ├── 13_geektime_langchain/ # 极客时间跟练
-├── 14_agent/              # Agent：工具 + 循环
+├── 14_agent/              # Agent：1.2 模型输入输出（ModelResult）
 ├── docs/
 │   └── agent-roadmap.md   # 智能体实战计划
 ├── projects/
