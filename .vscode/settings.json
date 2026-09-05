@@ -5,7 +5,7 @@
   "[python]": {
     "editor.formatOnSave": false,
     "editor.defaultFormatter": null,
-    "editor.inlineSuggest.enabled": false
+    "editor.inlineSuggest.enabled": true
   },
   "files.exclude": {
     "**/__pycache__": true,
@@ -13,17 +13,10 @@
   },
   "cursorpyright.analysis.extraPaths": [],
 
-  // 本仓库练手用：关掉 AI 补全，只留关键字下拉提示
-  "editor.inlineSuggest.enabled": false,
-  "cursor.completions.enabled": false,
-  "cursor.general.enableTab": false,
-  "cursor.cpp.disabledLanguages": [
-    "python",
-    "markdown",
-    "plaintext",
-    "json",
-    "shellscript"
-  ],
+  "editor.inlineSuggest.enabled": true,
+  "cursor.completions.enabled": true,
+  "cursor.general.enableTab": true,
+  "cursor.cpp.disabledLanguages": [],
   "github.copilot.enable": {
     "*": false
   },

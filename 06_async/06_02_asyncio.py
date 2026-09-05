@@ -1,60 +1,47 @@
 import asyncio
 import time
+from pathlib import Path
 
 
-# 模拟一个任务
-async def agent_task(name: str, delay: float) -> str:
-    await asyncio.sleep(delay)
-    return f"{name} 完成"
+# 串行调度
+def download(url):
+    time.sleep(1)          # 模拟网络 I/O，阻塞当前线程
+    return f"{url} 下载完成"
+
+start = time.perf_counter()
+for url in ["a", "b", "c"]:
+    print(download(url))   # 3 秒才全部完成
+print(f"耗时 {time.perf_counter() - start:.2f}s")  # 约 3.00s
 
 
-# 打印日志
-def log(msg: str, t0: float) -> None:
-    elapsed = time.perf_counter() - t0
-    print(f"[{elapsed:5.2f}s] {msg}")
+# 并行调度
+async def download(url):          # async = 声明这是协程
+    await asyncio.sleep(1)        # asyncio = 模块，提供 sleep / gather
+    return f"{url} 下载完成"
 
 
-# 验证 asyncio.gather 的用法
-async def asyncio_gather() -> None:
-    print("\n=== asyncio.gather（全部完成后，按提交顺序一次性返回）===")
-    t0 = time.perf_counter()
-    log("开始提交 3 个任务", t0)
-
-    tasks = [
-        agent_task("搜索", 3),
-        agent_task("分析", 1),
-        agent_task("写作", 2),
-    ]
-    results = await asyncio.gather(*tasks)
-
-    for result in results:
-        log(f"收到结果: {result}", t0)
-    log("gather 结束", t0)
+async def main():
+    tasks = [download(url) for url in ["a", "b", "c"]]
+    for result in await asyncio.gather(*tasks):
+        print(result)
 
 
-# 验证 asyncio.as_completed 的用法
-async def asyncio_as_completed() -> None:
-    print("\n=== asyncio.as_completed（先完成的先收到）===")
-    t0 = time.perf_counter()
-    log("开始提交 3 个任务", t0)
-
-    tasks = [
-        agent_task("搜索", 3),
-        agent_task("分析", 1),
-        agent_task("写作", 2),
-    ]
-    for coro in asyncio.as_completed(tasks):
-        result = await coro
-        log(f"收到结果: {result}", t0)
-    log("as_completed 遍历结束", t0)
+def read_lines(path):
+    with open(path) as f:
+        for line in f:
+            yield line.strip()      # 逐行产出，而不是 readlines() 一次性全读进内存
 
 
-# 验证 asyncio.gather 和 asyncio.as_completed 的用法
-async def main() -> None:
-    await asyncio_gather()
-    await asyncio_as_completed()
-    print("\n预期：gather 三条结果约在 3.00s 一起出现；as_completed 约在 1s / 2s / 3s 各出现一条。")
+def process(line: str) -> None:
+    print(line)
 
 
 if __name__ == "__main__":
+    start = time.perf_counter()
     asyncio.run(main())
+    print(f"异步调度耗时 {time.perf_counter() - start:.2f}s")  # 约 1.00s
+
+    sample = Path(__file__).with_name("sample.log")
+    print("--- read_lines ---")
+    for line in read_lines(sample):
+        process(line)
